@@ -1,50 +1,50 @@
-version: '3.7'
+version: '3.7'  # Especifica la versión de la sintaxis de Docker Compose que se está utilizando.
 
 services:
   proxy:
-    image: nginx:alpine
-    container_name: proxy
+    image: nginx:alpine  # Utiliza la imagen 'nginx:alpine' de Docker Hub.
+    container_name: proxy  # Asigna un nombre al contenedor.
     ports:
-      - '80:80'
+      - '80:80'  # Mapea el puerto 80 del host al puerto 80 del contenedor.
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    restart: 'unless-stopped'
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Monta el archivo de configuración local en el contenedor.
+    restart: 'unless-stopped'  # Define la política de reinicio del contenedor.
     networks:
-      - backend
+      - backend  # Conecta el contenedor a la red 'backend'.
   server:
     build:
-      context: ./
-      target: development-build-stage
-      dockerfile: Dockerfile
-    container_name: server
+      context: ./  # Utiliza el directorio actual como contexto para la construcción de la imagen.
+      target: development-build-stage  # Especifica el objetivo del Dockerfile.
+      dockerfile: Dockerfile  # Especifica el archivo Dockerfile a utilizar.
+    container_name: server  # Asigna un nombre al contenedor.
     ports:
-      - '3000:3000'
+      - '3000:3000'  # Mapea el puerto 3000 del host al puerto 3000 del contenedor.
     volumes:
-      - ./:/app
-      - /app/node_modules
-    restart: 'unless-stopped'
+      - ./:/app  # Monta el directorio actual en el contenedor en la ruta '/app'.
+      - /app/node_modules  # Monta el directorio de módulos de Node.js en el contenedor.
+    restart: 'unless-stopped'  # Define la política de reinicio del contenedor.
     networks:
-      - backend
+      - backend  # Conecta el contenedor a la red 'backend'.
     links:
-      - mysql
+      - mysql  # Establece una relación de enlace con el servicio 'mysql'.
     depends_on:
-      - mysql
+      - mysql  # Define que este servicio depende de 'mysql' y esperará a que se inicie.
   mysql:
-    image: mysql:5.7
-    container_name: mysql
+    image: mysql:5.7  # Utiliza la imagen 'mysql:5.7' de Docker Hub.
+    container_name: mysql  # Asigna un nombre al contenedor.
     environment:
-      MYSQL_ROOT_USER: root
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: test
+      MYSQL_ROOT_USER: root  # Establece el usuario root de MySQL.
+      MYSQL_ROOT_PASSWORD: password  # Establece la contraseña de root de MySQL.
+      MYSQL_DATABASE: test  # Crea una base de datos llamada 'test'.
     ports:
-      - '3306:3306'
+      - '3306:3306'  # Mapea el puerto 3306 del host al puerto 3306 del contenedor.
     networks:
-      - backend
+      - backend  # Conecta el contenedor a la red 'backend'.
 
 networks:
   backend:
-    driver: bridge
+    driver: bridge  # Define la red 'backend' como una red de tipo 'bridge'.
 
 volumes:
   data:
-    driver: local
+    driver: local  # Define un volumen llamado 'data' con un controlador local.
