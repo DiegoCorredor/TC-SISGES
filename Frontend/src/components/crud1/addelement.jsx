@@ -4,6 +4,7 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
+import Swal from 'sweetalert2';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -22,33 +23,50 @@ class Addelement extends Component {
             descriptionElement: '',
             optionsTypeElement: [],
             optionsStatusElement: [],
-            optionsDependencies: []
+            optionsDependencies: [],
+            URL: 'http://localhost:4000/'
         }
     }
 
 
 
     getTypeElements() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/typeElement').then(res => {
+        axios.get(URL+'dropdowns/typeElement').then(res => {
             this.setState({ optionsTypeElement: res.data.data })
         });
     }
 
     getStatuses() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/statuses').then(res => {
+        axios.get(URL+'dropdowns/statuses').then(res => {
             this.setState({ optionsStatusElement: res.data.data })
         });
     }
 
     getDependencies() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/dependencies').then(res => {
+        axios.get(URL+'dropdowns/dependencies').then(res => {
             this.setState({ optionsDependencies: res.data.data })
         });
     }
 
     saveElement() {
-        axios.post('https://sgri--backend--zp5spsybyvz4.code.run/inventary', { nameElement: this.state.nameElement, typeElement: this.state.typeElement, countElement: parseInt(this.state.countElement), stateElement: this.state.stateElement, valueElement: this.state.valueElement, dependencyElement: this.state.dependencyElement, dateStart: new Date(), descriptionElement: this.state.descriptionElement })
-            .then(res => { alert(res.data.message); this.props.navigate('/dashboard')});
+        axios.post(URL+'inventary', { nameElement: this.state.nameElement, typeElement: this.state.typeElement, countElement: parseInt(this.state.countElement), stateElement: this.state.stateElement, valueElement: this.state.valueElement, dependencyElement: this.state.dependencyElement, dateStart: new Date(), descriptionElement: this.state.descriptionElement })
+            .then(res => { 
+                Swal.fire({
+                    title: 'Todo salió bien 😎',
+                    text: '¡Producto agregado al inventario!',
+                    icon: 'success',
+                    confirmButtonText: 'Volver atrás'
+                  }) 
+                this.props.navigate('/dashboard')
+            })
+            .catch(err => {
+                Swal.fire({
+                    title: 'Algo salió mal 😕',
+                    text: '¡No se pudo agregar el producto al inventario!',
+                    icon: 'error',
+                    confirmButtonText: 'Volver atrás'
+                  })
+            });
     }
 
     refresh(){

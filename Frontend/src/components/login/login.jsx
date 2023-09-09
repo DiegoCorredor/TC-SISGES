@@ -5,6 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dialog } from 'primereact/dialog';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 class Login extends Component {
     constructor(props) {
@@ -18,7 +19,8 @@ class Login extends Component {
             displayResponsive: false,
             position: 'center',
             mailUser: '',
-            passwordUser: ''
+            passwordUser: '',
+            URL: 'http://localhost:4000/'
         };
 
         this.onClick = this.onClick.bind(this);
@@ -57,7 +59,25 @@ class Login extends Component {
 
     login(){
         const {mailUser, passwordUser} = this.state;
-        axios.post('http://localhost:4000/login',{mailUser,passwordUser, }, {withCredentials: true}).then((data) => this.props.navigate('/dashboard'))
+        axios.post(URL+'login',{mailUser,passwordUser, }, {withCredentials: true})
+        .then((data) => {
+            Swal.fire({
+                title: 'Todo parece estar bien 😎',
+                text: 'Esperamos que tengas una gran jornada de trabajo',
+                icon: 'success',
+                confirmButtonText: '¡Vamos allá!'
+              })
+            localStorage.setItem('name', data.nameUser);
+            this.props.navigate('/dashboard');
+        })
+        .catch((err) => {
+            Swal.fire({
+                title: 'Algo ha salido mal 🙁',
+                text: 'Vuelve a intentarlo, quizá tu constraseña o correo estén mal escritos',
+                icon: 'error',
+                confirmButtonText: 'Volver atrás'
+              })
+        })
     }
 
     render() {

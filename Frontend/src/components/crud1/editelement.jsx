@@ -5,7 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 
 class editelement extends Component {
     constructor(props) {
@@ -22,36 +22,37 @@ class editelement extends Component {
             optionsStatusElement: [],
             optionsDependencies: [],
             optionsSearch:[],
-            optionSelected: ''
+            optionSelected: '',
+            URL: 'http://localhost:4000/'
         }
     }
 
     getNames(){
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/inventary/').then(res => {
+        axios.get(URL+'inventary/').then(res => {
             this.setState({ optionsSearch: res.data.data })
         });
     }
 
     getElement(id){
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/inventary/'+id).then(res => {
+        axios.get(URL+'inventary/'+id).then(res => {
             this.setState({ ...res.data.data })
         });
     }
 
     getTypeElements() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/typeElement').then(res => {
+        axios.get(URL+'dropdowns/typeElement').then(res => {
             this.setState({ optionsTypeElement: res.data.data })
         });
     }
 
     getStatuses() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/statuses').then(res => {
+        axios.get(URL+'dropdowns/statuses').then(res => {
             this.setState({ optionsStatusElement: res.data.data })
         });
     }
 
     getDependencies() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/dependencies').then(res => {
+        axios.get(URL+'dropdowns/dependencies').then(res => {
             this.setState({ optionsDependencies: res.data.data })
         });
     }
@@ -74,8 +75,24 @@ class editelement extends Component {
     }
 
     update(){
-        axios.put('https://sgri--backend--zp5spsybyvz4.code.run/inventary/'+this.state.optionSelected, { nameElement: this.state.nameElement, typeElement: this.state.typeElement, countElement: parseInt(this.state.countElement), stateElement: this.state.stateElement, valueElement: this.state.valueElement, dependencyElement: this.state.dependencyElement, dateStart: new Date(), descriptionElement: this.state.descriptionElement })
-            .then(res => { alert(res.data.message); this.refresh(); this.props.navigate('/dashboard')});
+        axios.put(URL+'inventary/'+this.state.optionSelected, { nameElement: this.state.nameElement, typeElement: this.state.typeElement, countElement: parseInt(this.state.countElement), stateElement: this.state.stateElement, valueElement: this.state.valueElement, dependencyElement: this.state.dependencyElement, dateStart: new Date(), descriptionElement: this.state.descriptionElement })
+            .then(res => { 
+                Swal.fire({
+                    title: 'Todo salió bien 😎',
+                    text: '¡Producto actualizado en el inventario!',
+                    icon: 'success',
+                    confirmButtonText: 'Volver atrás'
+                  }) 
+                this.refresh(); 
+                this.props.navigate('/dashboard')})
+            .catch(err => {
+                Swal.fire({
+                    title: 'Algo salió mal 😕',
+                    text: '¡No se pudo actualizar el producto en el inventario!',
+                    icon: 'error',
+                    confirmButtonText: 'Volver atrás'
+                  })
+            });
     }
 
     componentDidMount(){

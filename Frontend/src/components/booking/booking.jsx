@@ -6,6 +6,7 @@ import { Calendar } from 'primereact/calendar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 class Booking extends Component {
     constructor(props) {
@@ -32,13 +33,13 @@ class Booking extends Component {
     
     
     getTypeService() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/typeService').then(res => {
+        axios.get('http://localhost:4000/dropdowns/typeService').then(res => {
             this.setState({ optionsTypeService: res.data.data })
         });
     }
 
     getTypeBooking() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/typeBooking').then(res => {
+        axios.get('http://localhost:4000/dropdowns/typeBooking').then(res => {
             this.setState({ optionsTypeBooking: res.data.data })
         });
     }
@@ -61,7 +62,7 @@ class Booking extends Component {
     }
 
     save() {
-        axios.post('https://sgri--backend--zp5spsybyvz4.code.run/booking', {
+        axios.post('http://localhost:4000/booking', {
             typeService: this.state.typeService,
             typeBooking: this.state.typeBooking,
             countBeds: parseInt(this.state.countBeds),
@@ -76,7 +77,21 @@ class Booking extends Component {
             observations: this.state.observations,
             stateBooking: 5
         }).then(res => {
-            alert(res.data.message); this.props.navigate('/bookingNew')
+            Swal.fire({
+                title: '¡Perfecto! 😎',
+                text: 'Estás a punto de terminar tu reservación, nos emociona mucho que nos hayas elegido.',
+                icon: 'success',
+                confirmButtonText: '¡Terminar reserva!'
+              })
+            alert(res.data.message); 
+            this.props.navigate('/bookingNew')
+        }).catch(err => {
+            Swal.fire({
+                title: 'Algo ha salido mal 🙁',
+                text: 'Vuelve a intentarlo, revisa los datos que has ingresado. Si el problema persiste, contacta con el administrador y enviale el siguiente mensaje: (' + err.message + ')',
+                icon: 'error',
+                confirmButtonText: 'Volver a atrás'
+              })
         });
     }
 

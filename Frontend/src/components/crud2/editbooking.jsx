@@ -6,6 +6,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 class editbooking extends Component {
     constructor(props) {
@@ -28,36 +29,37 @@ class editbooking extends Component {
             optionsTypeBooking: [],
             optionsstateBooking: [],
             optionsSearch: [],
-            optionSelected: ''
+            optionSelected: '',
+            URL: 'http://localhost:4000/'
         }
     }
 
     getBookings(){
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/booking').then(res => {
+        axios.get(URL+'booking').then(res => {
             this.setState({ optionsSearch: res.data.data })
         });
     }
 
     getElement(id){
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/booking/'+id).then(res => {
+        axios.get(URL+'booking/'+id).then(res => {
             this.setState({ ...res.data.data })
         });
     }
 
     getTypeService() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/typeService').then(res => {
+        axios.get(URL+'dropdowns/typeService').then(res => {
             this.setState({ optionsTypeService: res.data.data })
         });
     }
 
     getstateBooking(){
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/statuses').then(res => {
+        axios.get(URL+'dropdowns/statuses').then(res => {
             this.setState({ optionsstateBooking: res.data.data })
         });
     }
 
     getTypeBooking() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/typeBooking').then(res => {
+        axios.get(URL+'dropdowns/typeBooking').then(res => {
             this.setState({ optionsTypeBooking: res.data.data })
         });
     }
@@ -86,7 +88,7 @@ class editbooking extends Component {
     }
 
     update(){
-        axios.put('https://sgri--backend--zp5spsybyvz4.code.run/booking/'+this.state.optionSelected,{
+        axios.put(URL+'booking/'+this.state.optionSelected,{
             typeService: this.state.typeService,
             typeBooking: this.state.typeBooking,
             countBeds: parseInt(this.state.countBeds),
@@ -101,7 +103,24 @@ class editbooking extends Component {
             stateBooking: this.state.stateBooking,
             observations: this.state.observations,
 
-        }).then(res => { alert(res.data.message); this.refresh(); this.props.navigate('/dashboard')});
+        }).then(res => { 
+            Swal.fire({
+                title: 'Todo salió bien 😎',
+                text: '¡Reserva actualizada con éxito!',
+                icon: 'success',
+                confirmButtonText: 'Volver atrás'
+              }) 
+            this.refresh(); 
+            this.props.navigate('/dashboard')
+        })
+        .catch(err => {
+            Swal.fire({
+                title: 'Algo salió mal 😕',
+                text: '¡No se pudo actualizar la reserva!',
+                icon: 'error',
+                confirmButtonText: 'Volver atrás'
+              })
+        });
     }
 
     componentDidMount(){

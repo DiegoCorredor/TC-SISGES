@@ -4,25 +4,41 @@ import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 class deletebooking extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            bookingList: []
+            bookingList: [],
+            URL: 'http://localhost:4000/'
         }
     }
 
     delete(id) {
-        axios.delete('https://sgri--backend--zp5spsybyvz4.code.run/booking/' + id).then(res => {
-            alert(res.data.message);
+        axios.delete(URL+'booking/' + id)
+        .then(res => {
+            Swal.fire({
+                title: 'Todo salió bien 😎',
+                text: '¡Reserva eliminada con éxito!',
+                icon: 'success',
+                confirmButtonText: 'Volver atrás'
+              })
             window.location.reload();
+        })
+        .catch(err => {
+            Swal.fire({
+                title: 'Algo salió mal 😕',
+                text: '¡No se pudo eliminar la reserva!',
+                icon: 'error',
+                confirmButtonText: 'Volver atrás'
+              })
         });
 
     }
 
     componentDidMount() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/booking').then(res => {
+        axios.get(URL+'booking').then(res => {
             this.setState({ bookingList: res.data.data }); console.log(res.data.data);
         });
     }

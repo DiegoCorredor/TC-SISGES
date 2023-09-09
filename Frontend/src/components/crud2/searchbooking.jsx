@@ -7,13 +7,14 @@ class searchbooking extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            bookingList: []
+            bookingList: [],
+            URL: 'http://localhost:4000/'
         }
     }
 
     componentDidMount(){
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/booking').then(res => {
-            this.setState({bookingList: res.data.data}); console.log(res.data.data);
+        axios.get(URL+'booking').then(res => {
+            this.setState({bookingList: res.data.data}); 
         });
     }
 

@@ -4,25 +4,41 @@ import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 class delelement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            productList: []
+            productList: [],
+            URL: 'http://localhost:4000/'
         }
     }
 
     delete(id){
-        axios.delete('https://sgri--backend--zp5spsybyvz4.code.run/inventary/'+id).then(res => {
-            alert(res.data.message);
+        axios.delete(URL+'inventary/'+id)
+        .then(res => {
+            Swal.fire({
+                title: 'Todo salió bien 😎',
+                text: '¡Producto eliminado del inventario!',
+                icon: 'success',
+                confirmButtonText: 'Volver atrás'
+              })
             window.location.reload();
+        })
+        .catch(err => {
+            Swal.fire({
+                title: 'Algo salió mal 😕',
+                text: '¡No se pudo eliminar el producto del inventario!',
+                icon: 'error',
+                confirmButtonText: 'Volver atrás'
+              })
         });
     }
    
 
     componentDidMount(){
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/inventary').then(res => {
+        axios.get(URL+'inventary').then(res => {
             this.setState({productList: res.data.data});
         });
     }

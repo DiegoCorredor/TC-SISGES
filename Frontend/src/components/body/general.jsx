@@ -15,7 +15,7 @@ class general extends Component {
                 </div>
                 <div className='text-center'>
                     <h1>Bienvenidos</h1>
-                    <p className='intro'>Un espacio turístico que brinda servicio de hospedaje a visitantes tanto nacionales como de otros 
+                    <p className='intro mx-8 px-8'>Un espacio turístico que brinda servicio de hospedaje a visitantes tanto nacionales como de otros 
                                 países, se caracteriza por ser una casona que goza de arquitectura republicana con estilo señorial 
                                 revestida con un toque de modernidad y confort en sus habitaciones.</p>
                 </div>

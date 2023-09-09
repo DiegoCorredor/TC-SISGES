@@ -7,12 +7,13 @@ class searchelement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            productList: []
+            productList: [],
+            URL: 'http://localhost:4000/'
         }
     }
 
     componentDidMount(){
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/inventary').then(res => {
+        axios.get(URL+'inventary').then(res => {
             this.setState({productList: res.data.data});
         });
     }

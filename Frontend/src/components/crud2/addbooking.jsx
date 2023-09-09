@@ -6,6 +6,7 @@ import { Calendar } from 'primereact/calendar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 class AddBooking extends Component {
     constructor(props) {
@@ -23,21 +24,21 @@ class AddBooking extends Component {
             countChilds: '',
             countAdults: '',
             observations: '',
-            
             optionsTypeService: [],
             optionsTypeBooking: [],
+            URL: 'http://localhost:4000/'
 
         }
     }
 
     getTypeService() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/typeService').then(res => {
+        axios.get(URL+'dropdowns/typeService').then(res => {
             this.setState({ optionsTypeService: res.data.data })
         });
     }
 
     getTypeBooking() {
-        axios.get('https://sgri--backend--zp5spsybyvz4.code.run/dropdowns/typeBooking').then(res => {
+        axios.get(URL+'dropdowns/typeBooking').then(res => {
             this.setState({ optionsTypeBooking: res.data.data })
         });
     }
@@ -60,7 +61,7 @@ class AddBooking extends Component {
     }
 
     save() {
-        axios.post('https://sgri--backend--zp5spsybyvz4.code.run/booking', {
+        axios.post(URL+'booking', {
             typeService: this.state.typeService,
             typeBooking: this.state.typeBooking,
             countBeds: parseInt(this.state.countBeds),
@@ -75,7 +76,21 @@ class AddBooking extends Component {
             observations: this.state.observations,
             stateBooking: 5
         }).then(res => {
-            alert(res.data.message); this.props.navigate('/dashboard')
+            Swal.fire({
+                title: 'Todo salió bien 😎',
+                text: '¡Reserva agregada con éxito!',
+                icon: 'success',
+                confirmButtonText: 'Volver atrás'
+              }) 
+            this.props.navigate('/dashboard')
+        })
+        .catch(err => {
+            Swal.fire({
+                title: 'Algo salió mal 😕',
+                text: '¡No se pudo agregar la reserva!',
+                icon: 'error',
+                confirmButtonText: 'Volver atrás'
+              })
         });
     }
 

@@ -31,16 +31,31 @@ class menuAdmin extends Component {
             }
         ];
 
+        this.items3 = [
+            {
+                label: 'Facturación',
+                items:[
+                    {label: 'Añadir factura', icon: 'pi pi-plus', url: '/addbilling'},
+                    {label: 'Buscar factura', icon: 'pi pi-search', url: '/searchbilling'},
+                    {label: 'Editar factura', icon: 'pi pi-file-edit', url: '/editbilling'},
+                    {label: 'Cancelar factura', icon: 'pi pi-file-excel', url: '/deletebilling'}
+                ]
+            }
+        ];
+
     }
     render() {
         
         return (
             <div>
                 <div className='card mx-3 mt-3 mb-3'>
-                    <Menu className='' model={this.items}/>
+                    <Menu model={this.items}/>
                 </div>
                 <div className='card mx-3 mt-3 mb-3'>
                     <Menu model={this.items2}/>
+                </div>
+                <div className='card mx-3 mt-3 mb-3'>
+                    <Menu model={this.items3}/>
                 </div>
             </div>
         );
