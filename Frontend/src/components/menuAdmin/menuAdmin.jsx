@@ -38,10 +38,20 @@ class menuAdmin extends Component {
                     {label: 'Añadir factura', icon: 'pi pi-plus', url: '/addbilling'},
                     {label: 'Buscar factura', icon: 'pi pi-search', url: '/searchbilling'},
                     {label: 'Editar factura', icon: 'pi pi-file-edit', url: '/editbilling'},
-                    {label: 'Cancelar factura', icon: 'pi pi-file-excel', url: '/deletebilling'}
+                    {label: 'Eliminar factura', icon: 'pi pi-file-excel', url: '/deletebilling'}
                 ]
             }
         ];
+
+        this.items4 = [
+            {
+                label: 'Códigos de verificación',
+                items:[
+                    {label: 'Ver códigos', icon: 'pi pi-search', url: '/searchcodes'},
+                    
+                ]
+            }
+        ]
 
     }
     render() {
@@ -56,6 +66,9 @@ class menuAdmin extends Component {
                 </div>
                 <div className='card mx-3 mt-3 mb-3'>
                     <Menu model={this.items3}/>
+                </div>
+                <div className='card mx-3 mt-3 mb-3'>
+                    <Menu model={this.items4}/>
                 </div>
             </div>
         );

@@ -5,7 +5,8 @@ import billingService from "@/services/billing.service";
 
 class BillingController {
     public billingService = new billingService();
-    public async create(req: Request, res: Response, next: NextFunction): Promise<Response> {
+
+    public create = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
         try {
             const billingData: CreateBillingDto = req.body;
             const createBillingData: Billing = await this.billingService.createBilling(billingData);
@@ -15,7 +16,7 @@ class BillingController {
         }
     }
 
-    public async findAll(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    public findAll = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
         try {
             const findAllBillingData: Billing[] = await this.billingService.findAllBilling();
             return res.status(200).json({ data: findAllBillingData, message: "findAll" });
@@ -24,7 +25,7 @@ class BillingController {
         }
     }
 
-    public async findBillingById(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    public findBillingById = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
         try {
             const billingId: number = parseInt(req.params.id, 10);
             const findOneBillingData: Billing = await this.billingService.findBillingById(billingId);
@@ -34,7 +35,7 @@ class BillingController {
         }
     }
 
-    public async updateBilling(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    public updateBilling = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
         try {
             const billingId: number = parseInt(req.params.id, 10);
             const billingData: CreateBillingDto = req.body;
@@ -45,7 +46,7 @@ class BillingController {
         }
     }
 
-    public async deleteBilling(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    public deleteBilling = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
         try {
             const billingId: number = parseInt(req.params.id, 10);
             const deleteBillingData: Billing = await this.billingService.deleteBilling(billingId);
@@ -55,7 +56,7 @@ class BillingController {
         }
     }
 
-    public async findBillingByUserId(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    public findBillingByUserId = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
         try {
             const userId: number = parseInt(req.params.id, 10);
             const findBillingData: Billing = await this.billingService.findBillingById(userId);

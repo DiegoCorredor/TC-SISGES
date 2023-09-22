@@ -13,7 +13,7 @@ class searchelement extends Component {
     }
 
     componentDidMount(){
-        axios.get(URL+'inventary').then(res => {
+        axios.get(this.state.URL+'inventary').then(res => {
             this.setState({productList: res.data.data});
         });
     }

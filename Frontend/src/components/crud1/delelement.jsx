@@ -16,7 +16,7 @@ class delelement extends Component {
     }
 
     delete(id){
-        axios.delete(URL+'inventary/'+id)
+        axios.delete(this.state.URL+'inventary/'+id)
         .then(res => {
             Swal.fire({
                 title: 'Todo salió bien 😎',
@@ -38,7 +38,7 @@ class delelement extends Component {
    
 
     componentDidMount(){
-        axios.get(URL+'inventary').then(res => {
+        axios.get(this.state.URL+'inventary').then(res => {
             this.setState({productList: res.data.data});
         });
     }

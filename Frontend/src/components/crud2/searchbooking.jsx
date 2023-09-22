@@ -13,7 +13,7 @@ class searchbooking extends Component {
     }
 
     componentDidMount(){
-        axios.get(URL+'booking').then(res => {
+        axios.get(this.state.URL+'booking').then(res => {
             this.setState({bookingList: res.data.data}); 
         });
     }

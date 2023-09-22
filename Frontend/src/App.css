@@ -123,6 +123,20 @@ h1 {
   overflow: auto;
 }
 
+#form-checkout {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
+
+.containerP {
+  height: 18px;
+  display: inline-block;
+  border: 1px solid rgb(118, 118, 118);
+  border-radius: 2px;
+  padding: 1px 2px;
+}
+
 
 @media screen and (max-width: 767px) {
   .header1 {

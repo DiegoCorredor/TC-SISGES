@@ -28,31 +28,31 @@ class editelement extends Component {
     }
 
     getNames(){
-        axios.get(URL+'inventary/').then(res => {
+        axios.get(this.state.URL+'inventary/').then(res => {
             this.setState({ optionsSearch: res.data.data })
         });
     }
 
     getElement(id){
-        axios.get(URL+'inventary/'+id).then(res => {
+        axios.get(this.state.URL+'inventary/'+id).then(res => {
             this.setState({ ...res.data.data })
         });
     }
 
     getTypeElements() {
-        axios.get(URL+'dropdowns/typeElement').then(res => {
+        axios.get(this.state.URL+'dropdowns/typeElement').then(res => {
             this.setState({ optionsTypeElement: res.data.data })
         });
     }
 
     getStatuses() {
-        axios.get(URL+'dropdowns/statuses').then(res => {
+        axios.get(this.state.URL+'dropdowns/statuses').then(res => {
             this.setState({ optionsStatusElement: res.data.data })
         });
     }
 
     getDependencies() {
-        axios.get(URL+'dropdowns/dependencies').then(res => {
+        axios.get(this.state.URL+'dropdowns/dependencies').then(res => {
             this.setState({ optionsDependencies: res.data.data })
         });
     }
@@ -75,7 +75,7 @@ class editelement extends Component {
     }
 
     update(){
-        axios.put(URL+'inventary/'+this.state.optionSelected, { nameElement: this.state.nameElement, typeElement: this.state.typeElement, countElement: parseInt(this.state.countElement), stateElement: this.state.stateElement, valueElement: this.state.valueElement, dependencyElement: this.state.dependencyElement, dateStart: new Date(), descriptionElement: this.state.descriptionElement })
+        axios.put(this.state.URL+'inventary/'+this.state.optionSelected, { nameElement: this.state.nameElement, typeElement: this.state.typeElement, countElement: parseInt(this.state.countElement), stateElement: this.state.stateElement, valueElement: this.state.valueElement, dependencyElement: this.state.dependencyElement, dateStart: new Date(), descriptionElement: this.state.descriptionElement })
             .then(res => { 
                 Swal.fire({
                     title: 'Todo salió bien 😎',

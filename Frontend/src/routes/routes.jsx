@@ -14,6 +14,13 @@ import Searchbooking from '../pages/searchbooking.jsx';
 import Editbooking from '../pages/editbooking.jsx';
 import Deletebooking from '../pages/deletebooking.jsx';
 import NewBooking from '../pages/newbooking.jsx';
+import Failbooking from '../pages/failbooking.jsx';
+import Pendingbooking from '../pages/pendingbooking.jsx';
+import Addbilling from '../pages/addbilling.jsx';
+import Searchbilling from '../pages/searchbilling.jsx';
+import Editbilling from '../pages/editbilling.jsx';
+import Deletebilling from '../pages/delbilling.jsx';
+import Searchcodes from '../pages/searchcodes.jsx';
 
 export default createBrowserRouter([
     {
@@ -72,5 +79,33 @@ export default createBrowserRouter([
     {
         path:'/bookingNew',
         element: <NewBooking/>
+    },
+    {
+        path:'/failbooking',
+        element: <Failbooking/>
+    },
+    {
+        path:'/pendingbooking',
+        element: <Pendingbooking/>
+    },
+    {
+        path:'/addbilling',
+        element: <Addbilling/>
+    },
+    {
+        path:'/searchbilling',
+        element: <Searchbilling/>
+    },
+    {
+        path:'/editbilling',
+        element: <Editbilling/>
+    },
+    {
+        path:'/deletebilling',
+        element: <Deletebilling/>
+    },
+    {
+        path:'/searchcodes',
+        element: <Searchcodes/>
     }
 ]) 

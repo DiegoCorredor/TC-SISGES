@@ -59,7 +59,7 @@ class Login extends Component {
 
     login(){
         const {mailUser, passwordUser} = this.state;
-        axios.post(URL+'login',{mailUser,passwordUser, }, {withCredentials: true})
+        axios.post(this.state.URL+'login',{mailUser,passwordUser, }, {withCredentials: false})
         .then((data) => {
             Swal.fire({
                 title: 'Todo parece estar bien 😎',
@@ -67,13 +67,18 @@ class Login extends Component {
                 icon: 'success',
                 confirmButtonText: '¡Vamos allá!'
               })
-            localStorage.setItem('name', data.nameUser);
+            console.log(data);
+            localStorage.setItem('name', data.data.nameUser);
+            localStorage.setItem('id', data.data.iduser);
+            localStorage.setItem('role', data.data.typeUser);
+            localStorage.setItem('mail', data.data.mailUser);
+            localStorage.setItem('dni', data.data.dniUser);
             this.props.navigate('/dashboard');
         })
         .catch((err) => {
             Swal.fire({
                 title: 'Algo ha salido mal 🙁',
-                text: 'Vuelve a intentarlo, quizá tu constraseña o correo estén mal escritos',
+                text: 'Vuelve a intentarlo, quizá tu constraseña o correo estén mal escritos. El error es: \n('+err+')',
                 icon: 'error',
                 confirmButtonText: 'Volver atrás'
               })

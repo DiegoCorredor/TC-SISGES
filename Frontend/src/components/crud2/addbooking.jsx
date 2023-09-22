@@ -32,13 +32,13 @@ class AddBooking extends Component {
     }
 
     getTypeService() {
-        axios.get(URL+'dropdowns/typeService').then(res => {
+        axios.get(this.state.URL+'dropdowns/typeService').then(res => {
             this.setState({ optionsTypeService: res.data.data })
         });
     }
 
     getTypeBooking() {
-        axios.get(URL+'dropdowns/typeBooking').then(res => {
+        axios.get(this.state.URL+'dropdowns/typeBooking').then(res => {
             this.setState({ optionsTypeBooking: res.data.data })
         });
     }
@@ -61,7 +61,7 @@ class AddBooking extends Component {
     }
 
     save() {
-        axios.post(URL+'booking', {
+        axios.post(this.state.URL+'booking', {
             typeService: this.state.typeService,
             typeBooking: this.state.typeBooking,
             countBeds: parseInt(this.state.countBeds),

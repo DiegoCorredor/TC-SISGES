@@ -35,31 +35,31 @@ class editbooking extends Component {
     }
 
     getBookings(){
-        axios.get(URL+'booking').then(res => {
+        axios.get(this.state.URL+'booking').then(res => {
             this.setState({ optionsSearch: res.data.data })
         });
     }
 
     getElement(id){
-        axios.get(URL+'booking/'+id).then(res => {
+        axios.get(this.state.URL+'booking/'+id).then(res => {
             this.setState({ ...res.data.data })
         });
     }
 
     getTypeService() {
-        axios.get(URL+'dropdowns/typeService').then(res => {
+        axios.get(this.state.URL+'dropdowns/typeService').then(res => {
             this.setState({ optionsTypeService: res.data.data })
         });
     }
 
     getstateBooking(){
-        axios.get(URL+'dropdowns/statuses').then(res => {
+        axios.get(this.state.URL+'dropdowns/statuses').then(res => {
             this.setState({ optionsstateBooking: res.data.data })
         });
     }
 
     getTypeBooking() {
-        axios.get(URL+'dropdowns/typeBooking').then(res => {
+        axios.get(this.state.URL+'dropdowns/typeBooking').then(res => {
             this.setState({ optionsTypeBooking: res.data.data })
         });
     }
@@ -88,7 +88,7 @@ class editbooking extends Component {
     }
 
     update(){
-        axios.put(URL+'booking/'+this.state.optionSelected,{
+        axios.put(this.state.URL+'booking/'+this.state.optionSelected,{
             typeService: this.state.typeService,
             typeBooking: this.state.typeBooking,
             countBeds: parseInt(this.state.countBeds),

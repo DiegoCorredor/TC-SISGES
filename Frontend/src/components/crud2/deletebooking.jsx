@@ -16,7 +16,7 @@ class deletebooking extends Component {
     }
 
     delete(id) {
-        axios.delete(URL+'booking/' + id)
+        axios.delete(this.state.URL+'booking/' + id)
         .then(res => {
             Swal.fire({
                 title: 'Todo salió bien 😎',
@@ -38,8 +38,8 @@ class deletebooking extends Component {
     }
 
     componentDidMount() {
-        axios.get(URL+'booking').then(res => {
-            this.setState({ bookingList: res.data.data }); console.log(res.data.data);
+        axios.get(this.state.URL+'booking').then(res => {
+            this.setState({ bookingList: res.data.data });
         });
     }
 

@@ -62,6 +62,7 @@ DB.Inventary.hasOne(DB.Dependencies, { foreignKey: 'iddependency', sourceKey: 'd
 DB.Booking.hasOne(DB.TypeBooking, { foreignKey: 'idbooking', sourceKey: 'typeBooking' });
 DB.Booking.hasOne(DB.TypeService, { foreignKey: 'idservice', sourceKey: 'typeService' });
 DB.Booking.hasOne(DB.Statuses, { foreignKey: 'idstatus', sourceKey: 'stateBooking' });
+DB.Billing.hasOne(DB.Statuses, { foreignKey: 'idstatus', sourceKey: 'stateBilling' });
 
 export default DB;
 
