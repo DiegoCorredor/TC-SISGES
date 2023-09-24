@@ -103,23 +103,24 @@ class editbooking extends Component {
             stateBooking: this.state.stateBooking,
             observations: this.state.observations,
 
-        }).then(res => { 
-            Swal.fire({
-                title: 'Todo salió bien 😎',
-                text: '¡Reserva actualizada con éxito!',
-                icon: 'success',
-                confirmButtonText: 'Volver atrás'
-              }) 
-            this.refresh(); 
-            this.props.navigate('/dashboard')
-        })
-        .catch(err => {
-            Swal.fire({
-                title: 'Algo salió mal 😕',
-                text: '¡No se pudo actualizar la reserva!',
-                icon: 'error',
-                confirmButtonText: 'Volver atrás'
-              })
+        }).then(async (res) => {
+            if (res.data.message === 'updated'){
+                await Swal.fire({
+                    title: 'Todo salió bien 😎',
+                    text: '¡Reserva actualizada con éxito!',
+                    icon: 'success',
+                    confirmButtonText: 'Volver atrás'
+                  }) 
+                this.refresh(); 
+                window.location.reload();
+            }else{
+                Swal.fire({
+                    title: 'Algo salió mal 😕',
+                    text: '¡No se pudo actualizar la reserva!',
+                    icon: 'error',
+                    confirmButtonText: 'Volver atrás'
+                  })
+            }
         });
     }
 

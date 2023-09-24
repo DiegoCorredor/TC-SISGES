@@ -75,14 +75,14 @@ class AddBooking extends Component {
             countAdults: parseInt(this.state.countAdults),
             observations: this.state.observations,
             stateBooking: 5
-        }).then(res => {
-            Swal.fire({
+        }).then(async res => {
+            await Swal.fire({
                 title: 'Todo salió bien 😎',
                 text: '¡Reserva agregada con éxito!',
                 icon: 'success',
                 confirmButtonText: 'Volver atrás'
               }) 
-            this.props.navigate('/dashboard')
+              window.location.reload();
         })
         .catch(err => {
             Swal.fire({

@@ -17,8 +17,8 @@ class deletebilling extends Component {
 
     delete(id) {
         axios.delete(this.state.URL+'billings/' + id)
-        .then(res => {
-            Swal.fire({
+        .then(async res => {
+            await Swal.fire({
                 title: 'Todo salió bien 😎',
                 text: '¡Reserva eliminada con éxito!',
                 icon: 'success',

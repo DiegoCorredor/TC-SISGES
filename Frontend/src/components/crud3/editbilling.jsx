@@ -63,23 +63,24 @@ class Editbilling extends Component {
 
     updateBilling() {
         axios.put(this.state.URL + 'billings/' + this.state.optionSelected, { nameClient: this.state.nameClient, dateBilling: new Date(), productsBilling: parseInt(this.state.productsBilling), totalBilling: parseInt(this.state.totalBilling), stateBilling: this.state.stateBilling, descriptionBilling: this.state.descriptionBilling })
-            .then(res => {
-                Swal.fire({
-                    title: 'Todo salió bien 😎',
-                    text: '¡Factura actualizada!',
-                    icon: 'success',
-                    confirmButtonText: 'Volver atrás'
-                })
-                this.refresh(); 
-                this.props.navigate('/dashboard')
-            })
-            .catch(err => {
-                Swal.fire({
-                    title: 'Algo salió mal 😕',
-                    text: '¡No se pudo actualizar la factura!',
-                    icon: 'error',
-                    confirmButtonText: 'Volver atrás'
-                })
+            .then(async res => {
+                if (res.data.message === 'updated'){
+                    await Swal.fire({
+                        title: 'Todo salió bien 😎',
+                        text: '¡Factura actualizada!',
+                        icon: 'success',
+                        confirmButtonText: 'Volver atrás'
+                    })
+                    this.refresh(); 
+                    window.location.reload();
+                }else{
+                    Swal.fire({
+                        title: 'Algo salió mal 😕',
+                        text: '¡No se pudo actualizar la factura!',
+                        icon: 'error',
+                        confirmButtonText: 'Volver atrás'
+                    })
+                }
             });
     }
 

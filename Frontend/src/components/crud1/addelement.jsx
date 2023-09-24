@@ -50,14 +50,14 @@ class Addelement extends Component {
 
     saveElement() {
         axios.post(this.state.URL+'inventary', { nameElement: this.state.nameElement, typeElement: this.state.typeElement, countElement: parseInt(this.state.countElement), stateElement: this.state.stateElement, valueElement: this.state.valueElement, dependencyElement: this.state.dependencyElement, dateStart: new Date(), descriptionElement: this.state.descriptionElement })
-            .then(res => { 
-                Swal.fire({
+            .then(async res => { 
+                await Swal.fire({
                     title: 'Todo salió bien 😎',
                     text: '¡Producto agregado al inventario!',
                     icon: 'success',
                     confirmButtonText: 'Volver atrás'
                   }) 
-                this.props.navigate('/dashboard')
+                  window.location.reload();
             })
             .catch(err => {
                 Swal.fire({

@@ -21,48 +21,48 @@ class editelement extends Component {
             optionsTypeElement: [],
             optionsStatusElement: [],
             optionsDependencies: [],
-            optionsSearch:[],
+            optionsSearch: [],
             optionSelected: '',
             URL: 'http://localhost:4000/'
         }
     }
 
-    getNames(){
-        axios.get(this.state.URL+'inventary/').then(res => {
+    getNames() {
+        axios.get(this.state.URL + 'inventary/').then(res => {
             this.setState({ optionsSearch: res.data.data })
         });
     }
 
-    getElement(id){
-        axios.get(this.state.URL+'inventary/'+id).then(res => {
+    getElement(id) {
+        axios.get(this.state.URL + 'inventary/' + id).then(res => {
             this.setState({ ...res.data.data })
         });
     }
 
     getTypeElements() {
-        axios.get(this.state.URL+'dropdowns/typeElement').then(res => {
+        axios.get(this.state.URL + 'dropdowns/typeElement').then(res => {
             this.setState({ optionsTypeElement: res.data.data })
         });
     }
 
     getStatuses() {
-        axios.get(this.state.URL+'dropdowns/statuses').then(res => {
+        axios.get(this.state.URL + 'dropdowns/statuses').then(res => {
             this.setState({ optionsStatusElement: res.data.data })
         });
     }
 
     getDependencies() {
-        axios.get(this.state.URL+'dropdowns/dependencies').then(res => {
+        axios.get(this.state.URL + 'dropdowns/dependencies').then(res => {
             this.setState({ optionsDependencies: res.data.data })
         });
     }
 
-    onOptionSelect(e){
-        this.setState({optionSelected: e.target.value}); 
+    onOptionSelect(e) {
+        this.setState({ optionSelected: e.target.value });
         this.getElement(e.target.value);
     }
 
-    refresh(){
+    refresh() {
         this.setState({
             nameElement: '',
             typeElement: '',
@@ -74,48 +74,61 @@ class editelement extends Component {
         })
     }
 
-    update(){
-        axios.put(this.state.URL+'inventary/'+this.state.optionSelected, { nameElement: this.state.nameElement, typeElement: this.state.typeElement, countElement: parseInt(this.state.countElement), stateElement: this.state.stateElement, valueElement: this.state.valueElement, dependencyElement: this.state.dependencyElement, dateStart: new Date(), descriptionElement: this.state.descriptionElement })
-            .then(res => { 
-                Swal.fire({
-                    title: 'Todo salió bien 😎',
-                    text: '¡Producto actualizado en el inventario!',
-                    icon: 'success',
-                    confirmButtonText: 'Volver atrás'
-                  }) 
-                this.refresh(); 
-                this.props.navigate('/dashboard')})
-            .catch(err => {
-                Swal.fire({
-                    title: 'Algo salió mal 😕',
-                    text: '¡No se pudo actualizar el producto en el inventario!',
-                    icon: 'error',
-                    confirmButtonText: 'Volver atrás'
-                  })
+    async update() {
+        await axios.put(this.state.URL + 'inventary/' + this.state.optionSelected,
+            {
+                nameElement:
+                    this.state.nameElement,
+                typeElement: this.state.typeElement,
+                countElement: parseInt(this.state.countElement),
+                stateElement: this.state.stateElement,
+                valueElement: this.state.valueElement,
+                dependencyElement: this.state.dependencyElement,
+                dateStart: new Date(),
+                descriptionElement: this.state.descriptionElement
+            })
+            .then(async (res) => {
+                if (res.data.message === 'updated') {
+                    await Swal.fire({
+                        title: 'Todo salió bien 😎',
+                        text: '¡Producto actualizado en el inventario!',
+                        icon: 'success',
+                        confirmButtonText: 'Volver atrás'
+                    })
+                    this.refresh();
+                    window.location.reload();
+                } else {
+                    Swal.fire({
+                        title: 'Algo salió mal 😕',
+                        text: '¡No se pudo actualizar el producto en el inventario!',
+                        icon: 'error',
+                        confirmButtonText: 'Volver atrás'
+                    })
+                }
             });
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getNames();
         this.getTypeElements();
         this.getStatuses();
         this.getDependencies();
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div className='card max-w-screen'>
                 <div className=' align-items-center justify-content-start'>
                     <div className='align-items-center justify-content-center'>
                         <div className='py-2 px-5 sm:px-8 rounded'>
-                        <h3 className='mx-2 px-2'>Editar elemento del inventario</h3><hr/>
+                            <h3 className='mx-2 px-2'>Editar elemento del inventario</h3><hr />
                             <div className='card'>
                                 <div className='formgrid grid surface-100 border-round'>
                                     <div className='field col'>
                                         <label className="text-900 font-medium mb-2">Seleccione el árticulo para modificarlo</label>
-                                        <Dropdown className='w-full' value={this.state.optionSelected} optionLabel='nameElement' optionValue='idinventary' options={this.state.optionsSearch} onChange={(e)=>this.onOptionSelect(e)} placeholder="Elija el árticulo a modificar"/>
+                                        <Dropdown className='w-full' value={this.state.optionSelected} optionLabel='nameElement' optionValue='idinventary' options={this.state.optionsSearch} onChange={(e) => this.onOptionSelect(e)} placeholder="Elija el árticulo a modificar" />
                                     </div>
-                                </div><hr/>
+                                </div><hr />
                                 <div className='formgrid grid'>
                                     <div className='field col-6'>
                                         <label className="block text-900 font-medium mb-2">Nombre del árticulo</label>
@@ -152,8 +165,8 @@ class editelement extends Component {
                                 </div>
                                 <div className='formgrid grid justify-content-end'>
                                     <div className='field'>
-                                        <Button label="Limpiar" onClick={()=>this.refresh()} icon="pi pi-eraser" className="p-button-danger mx-1"/>
-                                        <Button label="Guardar cambios" onClick={()=>this.update()} icon="pi pi-save" className="p-button-success mx-1"/>
+                                        <Button label="Limpiar" onClick={() => this.refresh()} icon="pi pi-eraser" className="p-button-danger mx-1" />
+                                        <Button label="Guardar cambios" onClick={() => this.update()} icon="pi pi-save" className="p-button-success mx-1" />
                                     </div>
                                 </div>
                             </div>

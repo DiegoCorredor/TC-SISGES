@@ -45,14 +45,14 @@ class Addbilling extends Component {
 
     saveBilling(){
         axios.post(this.state.URL+'billings', { nameClient: this.state.nameClient, dateBilling: this.state.dateBilling, productsBilling: parseInt(this.state.productsBilling), totalBilling: parseInt(this.state.totalBilling), stateBilling: this.state.stateBilling, descriptionBilling: this.state.descriptionBilling })
-            .then(res => { 
-                Swal.fire({
+            .then(async res => { 
+                await Swal.fire({
                     title: 'Todo salió bien 😎',
                     text: '¡Factura agregada!',
                     icon: 'success',
                     confirmButtonText: 'Volver atrás'
                   }) 
-                this.props.navigate('/dashboard')
+                  window.location.reload();
             })
             .catch(err => {
                 Swal.fire({
