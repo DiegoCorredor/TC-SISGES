@@ -72,7 +72,7 @@ class Booking extends Component {
     }
 
     async save() {
-        axios.post(this.state.URL + 'booking', { 
+        await axios.post(this.state.URL + 'booking', { 
             typeService: this.state.typeService,
             typeBooking: this.state.typeBooking,
             countBeds: parseInt(this.state.countBeds),
@@ -87,8 +87,8 @@ class Booking extends Component {
             observations: this.state.observations,
             stateBooking: 5
         })
-        .then((res) => {
-            axios.post(this.state.PAYMENT)
+        .then(async (res) => {
+            await axios.post(this.state.PAYMENT)
             .then(async res => {
                 const newUrl = await res.data.id.init_point;
                 localStorage.setItem('client', this.state.dniClient);

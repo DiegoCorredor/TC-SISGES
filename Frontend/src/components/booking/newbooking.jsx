@@ -29,14 +29,12 @@ class Newbooking extends Component {
     }
 
     async saveData() {
-        alert('Su codigo de reserva es: ' + this.state.codeVerify);
-        alert('Su codigo de reserva es: ' + this.state.nameClient);
         const person = localStorage.getItem('nameClient');
         const mail = localStorage.getItem('mailClient');
         const dni = localStorage.getItem('client');
         if (person) {
             this.setState({ nameClient: person });
-            axios.post(this.state.URL + 'billings', {
+            await axios.post(this.state.URL + 'billings', {
                 nameClient: this.state.nameClient,
                 dateBilling: new Date(),
                 productsBilling: 1,
@@ -56,7 +54,6 @@ class Newbooking extends Component {
                             window.location.href = '/';
                         });
                 });
-
         }
     }
 
