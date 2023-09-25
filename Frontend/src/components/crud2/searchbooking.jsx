@@ -33,7 +33,8 @@ class searchbooking extends Component {
                             <div className='card'>
                                 
                                 <DataTable value={this.state.bookingList} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} header={header} footer={footer} className='w-100 text-center table-responsive'>
-                                    <Column field="nameClient" className='text-center' sortable header="Nombre del cliente"></Column>
+                                    <Column field="dniClient" className='text-center' sortable header="Cédula"></Column>
+                                    <Column field="nameClient" className='text-center' sortable header="Nombre del cliente"></Column><Column field="nameClient" className='text-center' sortable header="Nombre del cliente"></Column>
                                     <Column field="phoneClient" className='text-center' sortable header="Teléfono del cliente"></Column>
                                     <Column field="mailClient" className='text-center' sortable header="Correo del cliente"></Column>
                                     <Column field="TypeServiceModel.service" className='text-center' sortable header="Tipo de servicio"></Column>
